@@ -1,0 +1,64 @@
+<!-- Pinterest's Event Tracking for Shopify -->
+
+<!-- Page Visit -->
+{% if template contains 'page' %}
+<script>
+  pintrk ( 'track' , 'pagevisit' , {
+  page_title: '{{ page_title }}' ,
+  });
+</script>
+{% endif %}
+
+<!-- Add To Cart -->
+{% if template contains 'cart' %}
+<script>
+  pintrk ( 'track' , 'addtocart' , {
+  value: {{ cart.total_price | money_with_currency }} ,
+  order_quantity: {{ line_item.quantity }} ,
+  line_items: [
+  {
+  product_name: '{{ product.title }}' ,
+  product_id: '{{ product.id }}' ,
+  product_category: '{{ collection.title }}' ,
+  product_variant_id: '{{ variant.id }}' ,
+  product_price: {{ product.price }} ,
+  product_quantity: {{ line_item.quantity }} ,
+  }
+  ]
+  });
+</script>
+{% endif %}
+
+
+<!-- View Collection -->
+{% if template contains 'collection' %}
+<script>
+  pintrk ( 'track' , 'ViewCategory' , {
+  lead_type: '{{ collection.id }}' ,
+  });
+</script>
+{% endif %}
+
+
+<!-- Checkout -->
+
+<script>
+  pintrk('track', 'checkout', {
+    value: {{ checkout.total_price | money_with_currency }},
+    order_quantity: {{ line_item.quantity }},
+    line_items: [
+      {
+		product_name: '{{ product.title }}' ,
+		product_id: '{{ product.id }}' ,
+		product_category: '{{ collection.title }}' ,
+		product_variant_id: '{{ variant.id }}' ,
+		product_price: {{ product.price }} ,
+		product_quantity: {{ line_item.quantity }} ,
+      }
+    ]
+  });
+</script>
+
+
+
+
